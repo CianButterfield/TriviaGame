@@ -16,6 +16,7 @@ namespace TriviaGame
 
         public string Question
         {
+            //question property
             get { return _question; }
             set { _question = value; }
         }
@@ -24,6 +25,7 @@ namespace TriviaGame
 
         public string Answer
         {
+            //answer property
             get { return _answer; }
             set { _answer = value; }
         }
@@ -32,6 +34,7 @@ namespace TriviaGame
 
         public string Category
         {
+            //category property
             get { return _category; }
             set { _category = value; }
         }
@@ -61,7 +64,6 @@ namespace TriviaGame
             //split on * to get question and answer
             this.Question = input.Split('*').First().ToString();
             this.Answer = input.Split('*').Last().ToString();
-            
         }
 
 

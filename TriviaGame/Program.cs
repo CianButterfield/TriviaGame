@@ -11,6 +11,9 @@ namespace TriviaGame
     {
         static void Main(string[] args)
         {
+            //change the title of the console
+            Console.Title = "Trivia Game!";
+
             //The logic for your trivia game happens here
             List<Trivia> AllQuestions = GetTriviaList();
 
@@ -30,11 +33,10 @@ namespace TriviaGame
                 int randQuestion = rng.Next(AllQuestions.Count);
 
                 //Tell the user the category
-                Console.WriteLine("The category is " + AllQuestions[randQuestion].Category + ":");
+                Console.WriteLine("\nThe category is " + AllQuestions[randQuestion].Category + ":");
 
                 //output a question for test purposes
-                Console.WriteLine(AllQuestions[randQuestion].Question);
-                Console.WriteLine("\n");
+                Console.WriteLine(AllQuestions[randQuestion].Question + "\n");
 
                 //take user input
                 string input = Console.ReadLine();
@@ -42,17 +44,33 @@ namespace TriviaGame
                 //check if the user is correct
                 if (Standardize(input) == Standardize(AllQuestions[randQuestion].Answer))
                 {
-                    Console.WriteLine("You are correct\n");
+                    //the user is correct
+                    Console.WriteLine("You are correct!\n\n");
                     correct++;
                 }
                 else
                 {
-                    Console.WriteLine("You are wrong\n");
+                    //the user is wrong
+                    Console.WriteLine("You are wrong!\nThe correct answer is " + AllQuestions[randQuestion].Answer + ".\n\n");
                     incorrect++;
                 }
-            }
 
-            
+                //check if the user has won or lost
+                if (correct >= 20)
+                {
+                    //the user won
+                    Console.WriteLine("\n\n\nYou have won, good job.");
+                }
+                else if (incorrect >= 5)
+                {
+                    //the user lost
+                    Console.WriteLine("\n\n\nYou have lost.");
+                }
+                else
+                {
+
+                }
+            }
 
             //keep the console open
             Console.ReadKey();
@@ -80,6 +98,7 @@ namespace TriviaGame
         //Greet the user
         static void Greet()
         {
+            //welcome and give instructions to the user
             Console.WriteLine(@"Welcome to the Trivia Game!
 You will be asked questions and will need to type in answers.
 The game will end when you have answered 20 questions right or five wrong.
@@ -88,6 +107,7 @@ The game will end when you have answered 20 questions right or five wrong.
 
         static string Standardize(string input)
         {
+            //standardize inputs and answers
             input = input.ToLower().Replace("\'", "");
             return input;
         }
