@@ -72,7 +72,54 @@ namespace TriviaGame
                 }
             }
 
-            //keep the console open
+            //add high score
+            AddHighScore(correct - incorrect);
+            //display highscores
+            DisplayHighScores();
+
+        }
+
+        static void AddHighScore(int playerScore)
+        {
+            //get player name for high score
+            Console.Write("Your name: "); string playerName = Console.ReadLine();
+
+            //create a gateway to the database
+            CianEntities db = new CianEntities();
+
+            //create a new high score object
+            // fill it with our user's data
+            HighScore newHighScore = new HighScore();
+            newHighScore.DateCreated = DateTime.Now;
+            newHighScore.Game = "TriviaGame";
+            newHighScore.Name = playerName;
+            newHighScore.Score = playerScore;
+
+            //add it to the database
+            db.HighScores.Add(newHighScore);
+
+            //save our changes
+            db.SaveChanges();
+        }
+
+        static void DisplayHighScores()
+        {
+            //clear the console
+            Console.Clear();
+            Console.Title = "ΦTrivia Game High ScoresΦ";
+            Console.WriteLine("Trivia Game High Scores");
+            Console.WriteLine("≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡");
+
+            //create a new connection to the database
+            CianEntities db = new CianEntities();
+            //get the high score list
+            List<HighScore> highScoreList = db.HighScores.Where(x => x.Game == "TriviaGame").OrderByDescending(x => x.Score).Take(10).ToList();
+
+            foreach (HighScore highScore in highScoreList)
+            {
+                Console.WriteLine("{0}. {1} - {2}", highScoreList.IndexOf(highScore) + 1, highScore.Name, highScore.Score);
+            }
+
             Console.ReadKey();
         }
 
